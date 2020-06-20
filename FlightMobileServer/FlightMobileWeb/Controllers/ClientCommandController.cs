@@ -31,7 +31,14 @@ namespace FlightMobileWeb.Controllers
         {
             try
             {
-                return await this.simulatorFieldsCommander.HandleNewCommand(command);  
+                Result res = await this.simulatorFieldsCommander.HandleNewCommand(command);
+                if (res == Result.Ok)
+                {
+                    return Ok();
+                } else
+                {
+                    return BadRequest("TODO");
+                }
             }
             catch (ArgumentException e)
             {
