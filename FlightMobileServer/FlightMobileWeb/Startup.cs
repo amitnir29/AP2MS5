@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FlightMobileWeb.Screenshot;
+using FlightMobileWeb.TCPConnection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +31,10 @@ namespace FlightMobileWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+
+            services.AddSingleton<ISimulatorFieldsCommander, SimulatorFieldsCommander>();
+            //TODO services.AddSingleton<ISimulatorScreenshotGetter, SimulatorScreenshotGetter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
