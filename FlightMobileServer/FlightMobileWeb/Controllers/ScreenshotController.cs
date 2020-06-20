@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FlightMobileWeb.Screenshot;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace FlightMobileWeb.Controllers
 {
@@ -14,25 +15,28 @@ namespace FlightMobileWeb.Controllers
     public class ScreenshotController : ControllerBase
     {
         private ISimulatorScreenshotGetter simulatorScreenshotGetter;
+        private IConfiguration configuration;
 
-        public ScreenshotController(ISimulatorScreenshotGetter ssg)
+        public ScreenshotController(ISimulatorScreenshotGetter ssg, IConfiguration configuration)
         {
             this.simulatorScreenshotGetter = ssg;
+            this.configuration = configuration;
         }
 
 
-        /*
+        
 
         /// <summary>
         /// Get the screenshot of the current state of the simulator.
         /// </summary>
-        /// <returns> a jpg image of the current state </returns>
+        /// <returns> a jpg image of the current state as bytes array </returns>
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<byte[]>> Get()
         {
-            //return await this.simulatorScreenshotGetter.GetScreenshotFromSimulator();
+            byte[] pic = await this.simulatorScreenshotGetter.GetScreenshotFromSimulator();
+            return File(pic, "image/jpeg");
         }
-        */
+        
 
 
     }

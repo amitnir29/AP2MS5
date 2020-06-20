@@ -9,7 +9,10 @@ namespace FlightMobileWeb.Screenshot
 {
     public interface ISimulatorScreenshotGetter
     {
-
-        //public Task<ActionResult<File>> GetScreenshotFromSimulator();
+        /// <summary>
+        /// Get the current simulator's screenshot.
+        /// </summary>
+        /// <returns> a jpg file of the simulator's screenshot. </returns>
+        public Task<byte[]> GetScreenshotFromSimulator();
     }
 }

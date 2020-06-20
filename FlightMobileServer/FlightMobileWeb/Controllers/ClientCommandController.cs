@@ -31,8 +31,7 @@ namespace FlightMobileWeb.Controllers
         {
             try
             {
-                string s = await this.simulatorFieldsCommander.HandleNewCommand(command);
-                return Ok();
+                return await this.simulatorFieldsCommander.HandleNewCommand(command);  
             }
             catch (ArgumentException e)
             {

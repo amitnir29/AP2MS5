@@ -9,14 +9,9 @@ namespace FlightMobileWeb.TCPConnection
 {
     public class SimulatorFieldsCommander : ISimulatorFieldsCommander
     {
-        public Task<string> HandleNewCommand(CommandObject newCommand)
+        public Task<IActionResult> HandleNewCommand(CommandObject newCommand)
         {
-            string s = "";
-            s += newCommand.Aileron.ToString();
-            s += newCommand.Rudder.ToString();
-            s += newCommand.Throttle.ToString();
-            s += newCommand.Elevator.ToString();
-            return Task.Run(()=>s);
+            return null;
         }
     }
 }
