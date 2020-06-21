@@ -19,11 +19,5 @@ namespace FlightMobileWeb.TCPConnection
         /// <param name="newCommand"> the command object that contains the new fields </param>
         /// <returns> this action's result </returns>
         public Task<HttpResult> HandleNewCommand(CommandObject newCommand);
-        //TODO note for sherman: this method should be async i think in the implementation
-        //also, maybe make this return the http return value?
-
-
-
-        //TODO sherman
     }
 }
