@@ -7,12 +7,29 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.SurfaceView
 import android.view.View
 
 /**
  * TODO: document your custom view class.
  */
-class PictureView : View {
+class PictureView : SurfaceView {
+
+    constructor(context: Context) : super(context) {
+        //
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        //;
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    ) {
+        //
+    }
 
     /*private var _exampleString: String? = null // TODO: use a default from R.string...
     private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
