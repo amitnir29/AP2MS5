@@ -35,7 +35,6 @@ namespace FlightMobileWeb
 
             services.AddSingleton<ISimulatorFieldsCommander, SimulatorFieldsCommander>();
             services.AddSingleton<ISimulatorScreenshotGetter, SimulatorScreenshotGetter>();
-            //TODO services.AddSingleton<ISimulatorScreenshotGetter, SimulatorScreenshotGetter>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
 

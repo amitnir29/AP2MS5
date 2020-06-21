@@ -7,12 +7,24 @@ using System.Threading.Tasks;
 
 namespace FlightMobileWeb.Screenshot
 {
-
+    /// <summary>
+    /// This class uses http to get screenshots from the simulator.
+    /// </summary>
     public class SimulatorScreenshotGetter : ISimulatorScreenshotGetter
     {
+        /// <summary>
+        /// A client to use to make connection with the simulator.
+        /// </summary>
         private HttpClient simulatorClient;
+        /// <summary>
+        /// The simulator's path to send requests to.
+        /// </summary>
         private string simulatorScreenshotPath;
 
+        /// <summary>
+        /// The constructor.
+        /// </summary>
+        /// <param name="configuration"> the object to get configuration vars from. </param>
         public SimulatorScreenshotGetter(IConfiguration configuration)
         {
             this.simulatorClient = new HttpClient();
@@ -26,21 +38,20 @@ namespace FlightMobileWeb.Screenshot
         /// <returns> The simulator's screenshot path. </returns>
         private string GetSimulatorScreenshotPath(IConfiguration configuration)
         {
-            //TODO replace from app config
-            return "http://" + configuration["SimulatorHost"] + ':' + configuration["SimulatorPort"] + "/screenshot";
+            return "http://" + configuration["SimulatorHost"] +
+                ':' + configuration["SimulatorPort"] + "/screenshot";
         }
 
         public async Task<byte[]> GetScreenshotFromSimulator()
         {
             try
             {
-
-                byte[] ba = await this.simulatorClient.GetByteArrayAsync(this.simulatorScreenshotPath);
+                byte[] ba = await 
+                    this.simulatorClient.GetByteArrayAsync(this.simulatorScreenshotPath);
                 return ba;
             }
             catch
             {
-                //TODO error
                 return null;
             }
         }

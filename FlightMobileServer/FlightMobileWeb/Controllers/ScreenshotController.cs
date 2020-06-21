@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace FlightMobileWeb.Controllers
 {
+    /// <summary>
+    /// A controller for the screenshots from the simulator.
+    /// </summary>
     [Route("screenshot")]
     [ApiController]
     public class ScreenshotController : ControllerBase
@@ -17,14 +20,16 @@ namespace FlightMobileWeb.Controllers
         private ISimulatorScreenshotGetter simulatorScreenshotGetter;
         private IConfiguration configuration;
 
+        /// <summary>
+        /// The constructor.
+        /// </summary>
+        /// <param name="ssg"> An http client that gets screenshots from thee simulator. </param>
+        /// <param name="configuration"> the object to get configuration vars from. </param>
         public ScreenshotController(ISimulatorScreenshotGetter ssg, IConfiguration configuration)
         {
             this.simulatorScreenshotGetter = ssg;
             this.configuration = configuration;
         }
-
-
-        
 
         /// <summary>
         /// Get the screenshot of the current state of the simulator.
@@ -34,10 +39,22 @@ namespace FlightMobileWeb.Controllers
         public async Task<ActionResult<byte[]>> Get()
         {
             byte[] pic = await this.simulatorScreenshotGetter.GetScreenshotFromSimulator();
-            return File(pic, "image/jpeg");
+            //check if got a picture
+            if (pic == null)
+            {
+                return BadRequest("got null picture");
+            }
+            //check if the data can be converted to a picture.
+            try
+            {
+                return File(pic, "image/jpeg");
+            }
+            catch
+            {
+                return BadRequest("could not parse the simulator answer to a jpg file");
+            }
+            
         }
-        
-
 
     }
 }

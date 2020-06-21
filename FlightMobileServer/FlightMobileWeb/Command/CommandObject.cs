@@ -31,7 +31,8 @@ namespace FlightMobileWeb.Command
         /// <param name="clientRudder"></param>
         /// <param name="clientElevator"></param>
         /// <param name="clientThrottle"></param>
-        public CommandObject(double clientAileron, double clientRudder, double clientElevator, double clientThrottle)
+        public CommandObject(double clientAileron, double clientRudder,
+            double clientElevator, double clientThrottle)
         {
             Aileron = clientAileron;
             Rudder = clientRudder;

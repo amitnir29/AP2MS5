@@ -136,7 +136,7 @@ namespace FlightMobileWeb.TCPConnection
                     returnedValue != currentValue)
                 {
                     result.CommandResult = Result.NotOk;
-                    result.AddPostError(field.Key, currentValue, responseData);
+                    result.AddCommandPostError(field.Key, currentValue, responseData);
                 }
                 this.GetType().GetProperty("Prev" + field.Key).SetValue(this, returnedValue);
             }

@@ -9,12 +9,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlightMobileWeb.Controllers
 {
+    /// <summary>
+    /// A controller for the simulator's fields setting.
+    /// </summary>
     [Route("api/command")]
     [ApiController]
     public class ClientCommandController : ControllerBase
     {
         private ISimulatorFieldsCommander simulatorFieldsCommander;
 
+        /// <summary>
+        /// The constructor.
+        /// </summary>
+        /// <param name="sfc"> a tcp connector that sends the command to the simulator. </param>
         public ClientCommandController(ISimulatorFieldsCommander sfc)
         {
             this.simulatorFieldsCommander = sfc;
