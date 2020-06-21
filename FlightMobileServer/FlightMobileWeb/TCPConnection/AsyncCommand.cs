@@ -9,12 +9,12 @@ namespace FlightMobileWeb.TCPConnection
     public class AsyncCommand
     {
         public CommandObject Command { get; private set; }
-        public TaskCompletionSource<Result> Completion { get; private set;}
-        public Task<Result> Task { get => Completion.Task; }
+        public TaskCompletionSource<HttpResult> Completion { get; private set;}
+        public Task<HttpResult> Task { get => Completion.Task; }
         public AsyncCommand(CommandObject c)
         {
             Command = c;
-            Completion = new TaskCompletionSource<Result>
+            Completion = new TaskCompletionSource<HttpResult>
                 (TaskCreationOptions.RunContinuationsAsynchronously);
         }
     }

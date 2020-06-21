@@ -11,38 +11,44 @@ using System.Threading.Tasks;
 
 namespace FlightMobileWeb.TCPConnection
 {
-    public enum Result { Ok,NotOk};
+    public enum Result { Ok, NotOk };
     public class SimulatorFieldsCommander : ISimulatorFieldsCommander
     {
         private readonly BlockingCollection<AsyncCommand> _queue;
         private readonly TcpClient _client;
-        //private readonly string[]
-        private string[] blah;
         //private 
-        private double prevAileron;
-        private double prevRudder;
-        private double prevElevator;
-        private double prevThrottle;
-        private double PrevAileron
+        private double? prevAileron;
+        private double? prevRudder;
+        private double? prevElevator;
+        private double? prevThrottle;
+        public double? PrevAileron
         {
             get => prevAileron;
             set => prevAileron = value;
         }
-        public double PrevRudder
+        public double? PrevRudder
         {
             get => this.prevRudder;
             set => this.prevRudder = value;
         }
-        public double PrevElevator
+        public double? PrevElevator
         {
             get => this.prevElevator;
             set => this.prevElevator = value;
         }
-        public double PrevThrottle
+        public double? PrevThrottle
         {
             get => this.prevThrottle;
             set => this.prevThrottle = value;
         }
+        //the simulator's fields' paths
+        private static readonly Dictionary<string, string> pathFields = new Dictionary<string, string>
+        {
+            { "Aileron", "/controls/flight/aileron" },
+            { "Rudder", "/controls/flight/rudder" },
+            { "Elevator", "/controls/flight/elevator" },
+            { "Throttle", "/controls/engines/current-engine/throttle" }
+        };
         private readonly string flightSimHost;
         private readonly int flightSimPort;
         public SimulatorFieldsCommander(IConfiguration conf)
@@ -51,17 +57,18 @@ namespace FlightMobileWeb.TCPConnection
             _client = new TcpClient();
             this.flightSimHost = conf["SimulatorHost"];
             this.flightSimPort = Int32.Parse(conf["SimulatorPort"]);
+            //
+            this.PrevAileron = Double.PositiveInfinity;
+            this.PrevElevator = Double.PositiveInfinity;
+            this.PrevRudder = Double.PositiveInfinity;
+            this.PrevThrottle = Double.PositiveInfinity;
+            //now start the tcp connection
+            this.Start();
         }
-        public Task<Result> HandleNewCommand(CommandObject newCommand)
+        public Task<HttpResult> HandleNewCommand(CommandObject newCommand)
         {
-            /* string s = "";
-             s += newCommand.Aileron.ToString();
-             s += newCommand.Rudder.ToString();
-             s += newCommand.Throttle.ToString();
-             s += newCommand.Elevator.ToString();*/
             AsyncCommand asyncCommand = new AsyncCommand(newCommand);
             _queue.Add(asyncCommand);
-            //return Task.Run(()=>s);
             return asyncCommand.Task;
         }
         public void Start()
@@ -71,7 +78,7 @@ namespace FlightMobileWeb.TCPConnection
 
         public void HandleCommands()
         {
-            _client.Connect(this.flightSimHost,this.flightSimPort);
+            _client.Connect(this.flightSimHost, this.flightSimPort);
             NetworkStream stream = _client.GetStream();
             //send the initial data\n
             string initialConnection = "data\n";
@@ -81,7 +88,7 @@ namespace FlightMobileWeb.TCPConnection
             {
                 SendCommand(asyncCommand, stream);
             }
-           
+
         }
         public void Stop()
         {
@@ -90,27 +97,30 @@ namespace FlightMobileWeb.TCPConnection
         }
         private void SendCommand(AsyncCommand asyncCommand, NetworkStream stream)
         {
-            bool isOk = true;
-            string[] fieldNames = { "Aileron", "Rudder", "Elevator", "Throttle" };
-            IDictionary<string, string> pathFields = new Dictionary<string, string>();
-            pathFields.Add("Aileron", "/controls/flight/aileron");
-            pathFields.Add("Rudder", "/controls/flight/rudder");
-            pathFields.Add("Elevator", "s/controls/flight/elevator");
-            pathFields.Add("Throttle", "/controls/engines/current-engine/throttle");
+            HttpResult result = new HttpResult();
             // Send the message to the connected TcpServer.
             CommandObject command = asyncCommand.Command;
-            foreach(string field in fieldNames)
+            foreach (KeyValuePair<string, string> field in pathFields)
             {
-                double currentValue = (double)asyncCommand.GetType().GetProperty(field).GetValue(asyncCommand);
-                double prevValue = (double)this.GetType().GetProperty("Prev"+field).GetValue(this);
+                double currentValue = (double)command.GetType()
+                    .GetProperty(field.Key).GetValue(command);
+                double? prevValue = Double.PositiveInfinity;
+                if (this.GetType().GetProperty("Prev" + field.Key) != null)
+                {
+                    prevValue = (double?)this.GetType().GetProperty("Prev" + field.Key)
+                        .GetValue(this);
+                }
                 if (prevValue == currentValue)
                 {
                     continue;
                 }
-                string message = "set "+pathFields[field]+" "+ currentValue.ToString()+" \n";
+                string message = "set " + field.Value + " " + currentValue.ToString() + " \n";
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
                 stream.Write(data, 0, data.Length);
                 //check if it's the same field
+                message = "get " + field.Value + " \n";
+                data = System.Text.Encoding.ASCII.GetBytes(message);
+                stream.Write(data, 0, data.Length);
                 // Buffer to store the response bytes.
                 data = new Byte[256];
 
@@ -121,27 +131,17 @@ namespace FlightMobileWeb.TCPConnection
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                 double returnedValue;
-                //check if it's a double
-                if (!Double.TryParse(responseData,out returnedValue))
+                //if it's not a double, or a double with wrong value, set error result
+                if (!Double.TryParse(responseData, out returnedValue) ||
+                    returnedValue != currentValue)
                 {
-                    //TODO- return error
-                    isOk = false;
+                    result.CommandResult = Result.NotOk;
+                    result.AddPostError(field.Key, currentValue, responseData);
                 }
-                //if not the same value returned from server, call an error
-                if (returnedValue != currentValue)
-                {
-                    isOk = false;
-                }
+                this.GetType().GetProperty("Prev" + field.Key).SetValue(this, returnedValue);
             }
-            //check the bool to see what's the returned val
-            if (isOk)
-            {
-                asyncCommand.Completion.SetResult(Result.Ok);
-            }
-            else
-            {
-                asyncCommand.Completion.SetResult(Result.NotOk);
-            }
+            //set the return status
+            asyncCommand.Completion.SetResult(result);
 
         }
     }
