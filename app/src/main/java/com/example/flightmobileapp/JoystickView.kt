@@ -8,6 +8,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Rational
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_UP
 import android.view.SurfaceHolder
@@ -17,12 +18,20 @@ import android.view.View
 /**
  * TODO: document your custom view class.
  */
+
+
+
+
+
 class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
     private var centerX : Float = 0f
     private var centerY : Float = 0f
     private var baseRadius : Float = 0f
     private var topRadius : Float = 0f
+
+    private  var ratioDraw : Float = 30f;
+
 
     constructor(context: Context) : super(context) {
         //init(null, 0)
@@ -74,13 +83,35 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
             // Clear the canvas.
             myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
-            // Draw the base circle.
+
+            var hypo : Float = Math.sqrt((((newX - centerX) * (newX - centerX))
+                        + ((newY - centerY) * (newY - centerY))).toDouble()).toFloat();
+            var cos : Float = (newX - centerX) / hypo;
+            var sin : Float = (newY - centerY) / hypo;
+
+            // Draw the base circle without shading.
             color.setARGB(255, 50, 50, 50);
             myCanvas.drawCircle(centerX, centerY, baseRadius, color);
 
-            // Draw the top circle.
+            // Shading the base.
+            for (i in 1 .. (baseRadius / ratioDraw).toInt()) {
+                color.setARGB((150 / i).toInt(), 255, 0, 0);
+                myCanvas.drawCircle((newX - cos * hypo * (ratioDraw /baseRadius) * i).toFloat(),
+                    (newY - sin * hypo * (ratioDraw / baseRadius) * i).toFloat(),
+                    (i * (topRadius * ratioDraw / baseRadius)).toFloat(), color);
+            }
+
+            // Draw the top circle without shading.
             color.setARGB(255, 0, 0, 255);
             myCanvas.drawCircle(newX, newY, topRadius, color);
+
+            // Shading the top.
+            for (i in 1 .. (topRadius / ratioDraw).toInt()) {
+                color.setARGB(255, (i * (255 * ratioDraw / topRadius)).toInt(),
+                    (i * (255 * ratioDraw / topRadius)).toInt(), 255);
+                myCanvas.drawCircle(newX, newY,
+                    (topRadius - i.toFloat() * ratioDraw / 2).toFloat(), color);
+            }
 
             // Post the changes.
             holder.unlockCanvasAndPost(myCanvas);
@@ -103,13 +134,10 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
                 }
                 // Need to calculate the relative place.
                 else {
+                    // Relative position.
                     var ratio : Float = baseRadius / radius;
                     var consX : Float = centerX + (event.x - centerX) * ratio;
                     var consY : Float = centerY + (event.y - centerY) * ratio;
-                    /*var dx : Float = ((radius - baseRadius) / radius) * event.x;
-                    var dy : Float = ((radius - baseRadius) / radius) * event.y;
-                    var x : Float = event.x - dx;
-                    var y : Float = event.y - dy;*/
 
                     drawJoystick(consX, consY);
                 }
