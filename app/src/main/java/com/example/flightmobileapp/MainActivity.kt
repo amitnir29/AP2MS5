@@ -7,9 +7,9 @@ import android.view.SurfaceView
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         ////////
         var joystick : JoystickView = JoystickView(this);
-        setContentView(joystick);
+        //setContentView(joystick);
     }
 }
