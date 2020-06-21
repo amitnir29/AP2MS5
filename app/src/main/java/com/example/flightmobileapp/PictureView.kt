@@ -13,14 +13,14 @@ import android.view.View
 /**
  * TODO: document your custom view class.
  */
-class PictureView : SurfaceView {
+class PictureView : SurfaceView, SurfaceHolder.Callback {
 
     constructor(context: Context) : super(context) {
-        //
+        holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        //;
+        holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
@@ -28,7 +28,7 @@ class PictureView : SurfaceView {
         attrs,
         defStyle
     ) {
-        //
+        holder.addCallback(this);
     }
 
     /*private var _exampleString: String? = null // TODO: use a default from R.string...
