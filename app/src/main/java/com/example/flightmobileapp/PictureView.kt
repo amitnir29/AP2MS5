@@ -1,27 +1,31 @@
 package com.example.flightmobileapp
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import com.google.gson.GsonBuilder
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.InputStream
 
 /**
  * TODO: document your custom view class.
  */
-class PictureView : SurfaceView/*, SurfaceHolder.Callback*/ {
+class PictureView : SurfaceView {
 
     constructor(context: Context) : super(context) {
-        //holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        //holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
@@ -29,146 +33,68 @@ class PictureView : SurfaceView/*, SurfaceHolder.Callback*/ {
         attrs,
         defStyle
     ) {
-        //holder.addCallback(this);
     }
 
-    /*private var _exampleString: String? = null // TODO: use a default from R.string...
-    private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
-    private var _exampleDimension: Float = 0f // TODO: use a default from R.dimen...
-
-    private var textPaint: TextPaint? = null
-    private var textWidth: Float = 0f
-    private var textHeight: Float = 0f
 
     /**
-     * The text to draw
+     * Draw a given image on the scree.
+     * @param img input stream representing the image.
+     * @param x distance from left.
+     * @param y distance from top.
      */
-    var exampleString: String?
-        get() = _exampleString
-        set(value) {
-            _exampleString = value
-            invalidateTextPaintAndMeasurements()
+    private fun drawImageToScreen(img: InputStream?, x: Float, y: Float) {
+        if (img != null) {
+            // Decode the stream into a bitmap object.
+            val bitmap = BitmapFactory.decodeStream(img);
+
+            if (holder.surface.isValid) {
+                // Get the canvas to draw the picture on.
+                val myCanvas: Canvas = holder.lockCanvas();
+
+                // Set color to null.
+                val color: Paint? = null;
+
+                // Draw the image.
+                myCanvas.drawBitmap(bitmap, x, y, color);
+            }
         }
+    }
+
 
     /**
-     * The font color
+     * Get an image from the server.
+     * @param ip the ip of the server.
+     * @param port the port of the server.
+     * @return the image from the server if succeeded.
      */
-    var exampleColor: Int
-        get() = _exampleColor
-        set(value) {
-            _exampleColor = value
-            invalidateTextPaintAndMeasurements()
-        }
+    private fun getImageFromServer(ip: String, port: Int) {
+        val gson = GsonBuilder()
+                .setLenient()
+                .create()
 
-    /**
-     * In the example view, this dimension is the font size.
-     */
-    var exampleDimension: Float
-        get() = _exampleDimension
-        set(value) {
-            _exampleDimension = value
-            invalidateTextPaintAndMeasurements()
-        }
+        val retrofit = Retrofit.Builder()
+                .baseUrl("http://$ip:$port/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
 
-    /**
-     * In the example view, this drawable is drawn above the text.
-     */
-    var exampleDrawable: Drawable? = null
+        val api = retrofit.create(Api::class.java)
 
-    constructor(context: Context) : super(context) {
-        init(null, 0)
+        // The result to return later.
+        var res : InputStream? = null;
+
+        api.getImg().enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful()) {
+                    // Save the response of the server as a byte stream.
+                    res = response.body()?.byteStream()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            }
+        })
     }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    ) {
-        init(attrs, defStyle)
-    }
-
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
-        // Load attributes
-        val a = context.obtainStyledAttributes(
-            attrs, R.styleable.PictureView, defStyle, 0
-        )
-
-        _exampleString = a.getString(
-            R.styleable.PictureView_exampleString
-        )
-        _exampleColor = a.getColor(
-            R.styleable.PictureView_exampleColor,
-            exampleColor
-        )
-        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-        // values that should fall on pixel boundaries.
-        _exampleDimension = a.getDimension(
-            R.styleable.PictureView_exampleDimension,
-            exampleDimension
-        )
-
-        if (a.hasValue(R.styleable.PictureView_exampleDrawable)) {
-            exampleDrawable = a.getDrawable(
-                R.styleable.PictureView_exampleDrawable
-            )
-            exampleDrawable?.callback = this
-        }
-
-        a.recycle()
-
-        // Set up a default TextPaint object
-        textPaint = TextPaint().apply {
-            flags = Paint.ANTI_ALIAS_FLAG
-            textAlign = Paint.Align.LEFT
-        }
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements()
-    }
-
-    private fun invalidateTextPaintAndMeasurements() {
-        textPaint?.let {
-            it.textSize = exampleDimension
-            it.color = exampleColor
-            textWidth = it.measureText(exampleString)
-            textHeight = it.fontMetrics.bottom
-        }
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        // TODO: consider storing these as member variables to reduce
-        // allocations per draw cycle.
-        val paddingLeft = paddingLeft
-        val paddingTop = paddingTop
-        val paddingRight = paddingRight
-        val paddingBottom = paddingBottom
-
-        val contentWidth = width - paddingLeft - paddingRight
-        val contentHeight = height - paddingTop - paddingBottom
-
-        exampleString?.let {
-            // Draw the text.
-            canvas.drawText(
-                it,
-                paddingLeft + (contentWidth - textWidth) / 2,
-                paddingTop + (contentHeight + textHeight) / 2,
-                textPaint
-            )
-        }
-
-        // Draw the example drawable on top of the text.
-        exampleDrawable?.let {
-            it.setBounds(
-                paddingLeft, paddingTop,
-                paddingLeft + contentWidth, paddingTop + contentHeight
-            )
-            it.draw(canvas)
-        }
-    }*/
 }
