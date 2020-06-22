@@ -59,7 +59,7 @@ namespace FlightMobileWeb.TCPConnection
             _queue = new BlockingCollection<AsyncCommand>();
             _client = new TcpClient();
             this.flightSimHost = conf["SimulatorHost"];
-            this.flightSimPort = Int32.Parse(conf["SimulatorPort"]);
+            this.flightSimPort = Int32.Parse(conf["SimulatorTcpPort"]);
             //
             this.PrevAileron = Double.PositiveInfinity;
             this.PrevElevator = Double.PositiveInfinity;
@@ -98,8 +98,9 @@ namespace FlightMobileWeb.TCPConnection
             _client.Connect(this.flightSimHost, this.flightSimPort);
             NetworkStream stream = _client.GetStream();
             //send the initial data\n
-            string initialConnection = "data\n";
-            Byte[] initialData = System.Text.Encoding.ASCII.GetBytes(initialConnection);
+            string initialConnection = "data\r\n";
+            byte[] initialData = new byte[1024];
+            initialData = System.Text.Encoding.ASCII.GetBytes(initialConnection);
             stream.Write(initialData, 0, initialData.Length);
             foreach (AsyncCommand asyncCommand in _queue.GetConsumingEnumerable())
             {
@@ -148,15 +149,17 @@ namespace FlightMobileWeb.TCPConnection
             if (prevValue == currentValue){
                 return;
             }
-            string message = "set " + field.Value + " " + currentValue.ToString() + " \n";
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
+            string message = "set " + field.Value + " " + currentValue.ToString() + " \r\n";
+            byte[] data = new byte[1024];
+            data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
             //check if it's the same field
-            message = "get " + field.Value + " \n";
+            message = "get " + field.Value + " \r\n";
+            data = new byte[1024];
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
             // Buffer to store the response bytes.
-            data = new Byte[256];
+            data = new byte[1024];
             String responseData = String.Empty;
             Int32 bytes = stream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);

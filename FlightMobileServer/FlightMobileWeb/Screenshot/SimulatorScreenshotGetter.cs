@@ -39,7 +39,7 @@ namespace FlightMobileWeb.Screenshot
         private string GetSimulatorScreenshotPath(IConfiguration configuration)
         {
             return "http://" + configuration["SimulatorHost"] +
-                ':' + configuration["SimulatorPort"] + "/screenshot";
+                ':' + configuration["SimulatorHttpPort"] + "/screenshot";
         }
 
         public async Task<byte[]> GetScreenshotFromSimulator()

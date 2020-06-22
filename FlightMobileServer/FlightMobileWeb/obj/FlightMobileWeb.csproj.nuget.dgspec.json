@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj": {}
+    "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj": {}
   },
   "projects": {
-    "D:\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj": {
+    "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
+        "projectUniqueName": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
         "projectName": "FlightMobileWeb",
-        "projectPath": "D:\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
-        "packagesPath": "C:\\Users\\Ron\\.nuget\\packages\\",
-        "outputPath": "D:\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\obj\\",
+        "projectPath": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
+        "packagesPath": "C:\\Users\\carme\\.nuget\\packages\\",
+        "outputPath": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ron\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\carme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
