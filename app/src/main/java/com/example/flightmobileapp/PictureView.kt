@@ -7,20 +7,21 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
 
 /**
  * TODO: document your custom view class.
  */
-class PictureView : SurfaceView, SurfaceHolder.Callback {
+class PictureView : SurfaceView/*, SurfaceHolder.Callback*/ {
 
     constructor(context: Context) : super(context) {
-        holder.addCallback(this);
+        //holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        holder.addCallback(this);
+        //holder.addCallback(this);
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
@@ -28,7 +29,7 @@ class PictureView : SurfaceView, SurfaceHolder.Callback {
         attrs,
         defStyle
     ) {
-        holder.addCallback(this);
+        //holder.addCallback(this);
     }
 
     /*private var _exampleString: String? = null // TODO: use a default from R.string...
