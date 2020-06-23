@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.flightmobileapp.JoystickView
+
+    <fragment
+        android:id="@+id/mainNavhostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:navGraph="@navigation/navigation"
+        app:defaultNavHost="true"
+        />
+
+    <!---<com.example.flightmobileapp.JoystickView
         android:id="@+id/joystickView2"
         android:layout_width="419dp"
         android:layout_height="331dp"
@@ -33,6 +43,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

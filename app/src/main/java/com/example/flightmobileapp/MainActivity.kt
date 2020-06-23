@@ -9,7 +9,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ////////
-        var joystick : JoystickView = JoystickView(this);
+        ///var joystick : JoystickView = JoystickView(this);
         //setContentView(joystick);
+        //LoginFragment.newInstance()
+        //setContentView(R.layout.fragment_login)
     }
 }
