@@ -1,2 +1,4 @@
 # AP2MS5
-Advanced Programming 2 Mile Stone 5
+Android Application that controls a flight simulator.
+
+The App is writen in Kotlin, and the communication with the server and the simulator is done using HTTP.
