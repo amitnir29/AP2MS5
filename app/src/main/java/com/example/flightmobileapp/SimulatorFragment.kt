@@ -18,9 +18,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-private const val URI: String = "place holder"
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -28,21 +25,13 @@ class SimulatorFragment : Fragment() {
     private lateinit var binding: FragmentSimulatorBinding
     private lateinit var simulatorJob: Job
 
-    private lateinit var uri: String
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            uri = it.getString(URI)!!
-        }
-    }
+    private var uri: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate<FragmentSimulatorBinding>(inflater,
+        binding = DataBindingUtil.inflate(inflater,
         R.layout.fragment_simulator, container, false)
 
-        binding.textView.text = uri
         return binding.root
     }
 
@@ -50,15 +39,13 @@ class SimulatorFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        val uri:String = "http://localhost:5410"
-
         simulatorJob = Job()
 
         val scope = CoroutineScope(Dispatchers.Main + simulatorJob)
 
-        /*scope.launch {
-            imageAsking(uri, 100)
-        }*/
+        scope.launch {
+            imageAsking(100)
+        }
     }
 
 
@@ -68,27 +55,30 @@ class SimulatorFragment : Fragment() {
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance(uri: String) =
-                BlankFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(URI, uri)
-                    }
-                }
+    fun setUri(newUri: String) {
+        uri = newUri
     }
 
 
-    private suspend fun imageAsking(uri: String, delayTime: Long) {
-        while (true) {
-            val url = uri + "screenshot/"
-
-            withContext(Dispatchers.Main) {
-                getImageFromServer(url)
+    private suspend fun imageAsking(delayTime: Long) {
+        withContext(Dispatchers.Main) {
+            while (true) {
+                if (uri != null) {
+                    binding.textView.text = uri
+                }
             }
-
-            delay(delayTime)
         }
+        /*while (true) {
+            if (uri != null) {
+                val url = uri + "screenshot/"
+
+                withContext(Dispatchers.Main) {
+                    getImageFromServer(url)
+                }
+
+                delay(delayTime)
+            }
+        }*/
     }
 
 
