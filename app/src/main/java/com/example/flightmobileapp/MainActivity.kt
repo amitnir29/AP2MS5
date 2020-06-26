@@ -16,11 +16,4 @@ class MainActivity : AppCompatActivity() {
         //LoginFragment.newInstance()
         //setContentView(R.layout.fragment_login)
     }
-
-
-    fun uriChanged(uri: String) {
-        val simulatorFragment = (supportFragmentManager.findFragmentById(R.id.simulatorFragment)
-                    as SimulatorFragment?)
-        simulatorFragment?.setUri(uri)
-    }
 }

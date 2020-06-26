@@ -9,7 +9,11 @@
         android:id="@+id/simulatorFragment"
         android:name="com.example.flightmobileapp.SimulatorFragment"
         android:label="fragment_simulator"
-        tools:layout="@layout/fragment_simulator" />
+        tools:layout="@layout/fragment_simulator" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.flightmobileapp.LoginFragment"

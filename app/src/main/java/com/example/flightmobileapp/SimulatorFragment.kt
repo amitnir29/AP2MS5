@@ -39,6 +39,8 @@ class SimulatorFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        uri = arguments?.getString("url")
+
         simulatorJob = Job()
 
         val scope = CoroutineScope(Dispatchers.Main + simulatorJob)
@@ -55,19 +57,15 @@ class SimulatorFragment : Fragment() {
     }
 
 
-    fun setUri(newUri: String) {
-        uri = newUri
-    }
-
-
     private suspend fun imageAsking(delayTime: Long) {
-        withContext(Dispatchers.Main) {
+        /*withContext(Dispatchers.Main) {
             while (true) {
                 if (uri != null) {
                     binding.textView.text = uri
                 }
             }
-        }
+        }*/
+        binding.textView.text = uri
         /*while (true) {
             if (uri != null) {
                 val url = uri + "screenshot/"
