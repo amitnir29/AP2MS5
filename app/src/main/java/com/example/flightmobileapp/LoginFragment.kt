@@ -30,13 +30,12 @@ class LoginFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val database = SavedURLsDatabase.getInstance(application)
 
-        var databaseSize : Int? = null
         uiScope.launch {
-            databaseSize = readDataBase(binding, database)
+            readDataBase(binding, database)
         }
 
         binding.Connect.setOnClickListener {view : View ->
-            startSimulator(binding, database, view, databaseSize)
+            startSimulator(binding, database, view)
         }
 
         return binding.root
@@ -53,28 +52,15 @@ class LoginFragment : Fragment() {
      * @param binding the binding object of the frame.
      * @param database the database of the urls.
      * @param view the view of the simulator, to move to.
-     * @param databaseSize the size of the database before connecting.
      */
     private fun startSimulator(binding: FragmentLoginBinding, database: SavedURLsDatabase,
-    view: View, databaseSize: Int?) {
+    view: View) {
         // Get the uri inserted by the user.
         val uri :  String = binding.URL.text.toString()
 
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                if (database.urlDatabaseDao.getByURL(uri) == null) {
-                    // Save the uri to the database for future usage.
-                    val url = myURL(url = uri)
-                    database.urlDatabaseDao.insert(url)
-
-                    /* If database already contains more than the required elements,
-                     * remove the oldest*/
-                    if (databaseSize == 5)
-                        database.urlDatabaseDao.removeOldest()
-                }
-                else {
-                    database.urlDatabaseDao.setLastUsed(uri)
-                }
+                database.uriConnected(uri)
             }
         }
 
@@ -91,22 +77,17 @@ class LoginFragment : Fragment() {
      * Read elements from the database to the appropriate buttons.
      * @param binding the binding object.
      * @param database the database of the urls.
-     * @return the size of the database.
      */
-    private suspend fun readDataBase(binding: FragmentLoginBinding, database: SavedURLsDatabase):
-            Int? {
+    private suspend fun readDataBase(binding: FragmentLoginBinding, database: SavedURLsDatabase) {
 
         // Read the most 5 relevant urls from the database.
-        var savedURLs: List<myURL>?
+        var savedURLs: List<String>
         withContext(Dispatchers.IO) {
-            savedURLs = database.urlDatabaseDao.getRelevant()
+            savedURLs = database.getRelevants()
         }
 
-        if (savedURLs == null)
-            return null
-
         // Declare last element to iterate over.
-        val last = savedURLs!!.size - 1
+        val last = savedURLs.size - 1
 
         // Iterate over all the relevant urls.
         for (i in 0..last) {
@@ -117,14 +98,12 @@ class LoginFragment : Fragment() {
             urlButton.visibility = View.VISIBLE
 
             // Change the button text to the url.
-            urlButton.text = savedURLs!![i].url
+            urlButton.text = savedURLs[i]
 
             // By clicking on the button the text box should show the corresponding url.
             urlButton.setOnClickListener {
-                binding.URL.setText(savedURLs!![i].url)
+                binding.URL.setText(savedURLs[i])
             }
         }
-
-        return savedURLs!!.size
     }
 }

@@ -10,6 +10,9 @@ import java.security.AccessControlContext
 abstract class SavedURLsDatabase : RoomDatabase() {
     abstract val urlDatabaseDao : URLDatabaseDao
 
+    val capacity: Int
+        get() = 5
+
     companion object {
         @Volatile
         private var INSTANCE: SavedURLsDatabase? = null
@@ -32,5 +35,34 @@ abstract class SavedURLsDatabase : RoomDatabase() {
                 return instance
             }
         }
+    }
+
+    fun uriConnected(uri: String) {
+        if (this.urlDatabaseDao.getByURL(uri) == null) {
+            // Save the uri to the database for future usage.
+            val url = myURL(url = uri)
+            urlDatabaseDao.insert(url)
+
+            /* If database already contains more than the required elements,
+             * remove the oldest*/
+            val databaseSize = this.urlDatabaseDao.size()
+            if (databaseSize == this.capacity)
+                this.urlDatabaseDao.removeOldest()
+        }
+        else {
+            this.urlDatabaseDao.setLastUsed(uri)
+        }
+    }
+
+
+    fun getRelevants(): List<String> {
+        val urlObjs = urlDatabaseDao.getRelevants(capacity)
+
+        var urls: MutableList<String> = mutableListOf()
+
+        for (urlObj: myURL in urlObjs)
+            urls.add(urlObj.url)
+
+        return urls
     }
 }
