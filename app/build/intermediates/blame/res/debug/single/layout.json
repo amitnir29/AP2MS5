@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_login.xml",
+        "source": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\app\\src\\main\\res\\layout\\fragment_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_simulator.xml",
+        "source": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\app\\src\\main\\res\\layout\\fragment_simulator.xml"
+    }
+]
