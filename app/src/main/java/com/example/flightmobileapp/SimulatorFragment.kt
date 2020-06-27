@@ -58,25 +58,17 @@ class SimulatorFragment : Fragment() {
 
 
     private suspend fun imageAsking(delayTime: Long) {
-        /*withContext(Dispatchers.Main) {
+        binding.textView.text = uri
+
+        withContext(Dispatchers.Main) {
             while (true) {
                 if (uri != null) {
-                    binding.textView.text = uri
-                }
-            }
-        }*/
-        binding.textView.text = uri
-        /*while (true) {
-            if (uri != null) {
-                val url = uri + "screenshot/"
-
-                withContext(Dispatchers.Main) {
+                    val url = "$uri/screenshot/"
                     getImageFromServer(url)
+                    delay(delayTime)
                 }
-
-                delay(delayTime)
             }
-        }*/
+        }
     }
 
 
@@ -102,7 +94,7 @@ class SimulatorFragment : Fragment() {
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
             ) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     // Save the response of the server as a byte stream.
                     val res = response.body()?.byteStream()
                     val picture = BitmapFactory.decodeStream(res!!)
@@ -112,6 +104,10 @@ class SimulatorFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                if (t.message != null)
+                Log.i("Image Asking", t.message!!)
+                else
+                    Log.i("Image Asking", "Query to server failed.\n")
             }
         })
     }

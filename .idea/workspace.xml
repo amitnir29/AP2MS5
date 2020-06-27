@@ -10,12 +10,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cb91e60-af9a-4ed3-98af-9c56a91cef26" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/LoginFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/SavedURLsDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/SavedURLsDatabase.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/URLDatabaseDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/URLDatabaseDao.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_blank.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_simulator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_simulator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/.vs/FlightMobileServer/config/applicationhost.config" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/.vs/FlightMobileServer/config/applicationhost.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/.vs/FlightMobileServer/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/.vs/FlightMobileServer/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.runtimeconfig.dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/FlightMobileWeb.runtimeconfig.dev.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/bin/Debug/netcoreapp3.1/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.dll" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/Debug/netcoreapp3.1/FlightMobileWeb.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/FlightMobileWeb.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/FlightMobileWeb.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/FlightMobileWeb.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/FlightMobileWeb.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/FlightMobileServer/FlightMobileWeb/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/SimulatorFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/flightmobileapp/SimulatorFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,22 +263,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="439" y="122" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1592756728998" />
-    <state width="1323" height="218" key="GridCell.Tab.0.bottom" timestamp="1593186834743">
+    <state width="1321" height="176" key="GridCell.Tab.0.bottom" timestamp="1593283440067">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="218" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1593186834743" />
-    <state width="1323" height="218" key="GridCell.Tab.0.center" timestamp="1593186834741">
+    <state width="1321" height="176" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1593283440067" />
+    <state width="1321" height="176" key="GridCell.Tab.0.center" timestamp="1593283440065">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="218" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1593186834741" />
-    <state width="1323" height="218" key="GridCell.Tab.0.left" timestamp="1593186834739">
+    <state width="1321" height="176" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1593283440065" />
+    <state width="1321" height="176" key="GridCell.Tab.0.left" timestamp="1593283440064">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="218" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1593186834739" />
-    <state width="1323" height="218" key="GridCell.Tab.0.right" timestamp="1593186834743">
+    <state width="1321" height="176" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1593283440064" />
+    <state width="1321" height="176" key="GridCell.Tab.0.right" timestamp="1593283440066">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="218" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1593186834743" />
+    <state width="1321" height="176" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1593283440066" />
     <state width="1323" height="218" key="GridCell.Tab.1.bottom" timestamp="1593186834748">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -286,14 +299,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="316" y="12" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1593157884672" />
-    <state x="92" y="157" width="1146" height="535" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1592911851591">
+    <state x="92" y="157" width="1146" height="535" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1593283761817">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="157" width="1146" height="535" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1366.728@0.0.1366.728" timestamp="1592911851591" />
-    <state x="354" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1593153435783">
+    <state x="92" y="157" width="1146" height="535" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1366.728@0.0.1366.728" timestamp="1593283761817" />
+    <state x="354" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1593281776163">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="354" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1593153435783" />
+    <state x="354" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1593281776163" />
     <state x="380" y="0" width="606" height="728" key="find.popup" timestamp="1593059080513">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
