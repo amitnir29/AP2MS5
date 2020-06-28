@@ -36,7 +36,7 @@ namespace FlightMobileWeb.Controllers
         /// </summary>
         /// <returns> a jpg image of the current state as bytes array </returns>
         [HttpGet]
-        public async Task<ActionResult<byte[]>> Get()
+        public async Task<IActionResult> Get()
         {
             byte[] pic = await this.simulatorScreenshotGetter.GetScreenshotFromSimulator();
             //check if got a picture
