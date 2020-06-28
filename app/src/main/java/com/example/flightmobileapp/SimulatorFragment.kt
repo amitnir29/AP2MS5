@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.flightmobileapp.databinding.FragmentSimulatorBinding
 import com.google.gson.GsonBuilder
@@ -104,10 +105,12 @@ class SimulatorFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                if (t.message != null)
-                Log.i("Image Asking", t.message!!)
-                else
-                    Log.i("Image Asking", "Query to server failed.\n")
+                val message = "Failed to get image from the server."
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(context, message, duration)
+
+                toast.show()
             }
         })
     }
