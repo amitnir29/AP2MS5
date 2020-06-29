@@ -57,6 +57,8 @@ class SimulatorFragment : Fragment() {
         simulatorJob.cancel()
     }
 
+    //TODO fix backwards disconnection
+
 
     private suspend fun imageAsking(delayTime: Long) {
         binding.textView.text = uri
@@ -95,6 +97,7 @@ class SimulatorFragment : Fragment() {
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
             ) {
+
                 if (response.isSuccessful) {
                     // Save the response of the server as a byte stream.
                     val res = response.body()?.byteStream()

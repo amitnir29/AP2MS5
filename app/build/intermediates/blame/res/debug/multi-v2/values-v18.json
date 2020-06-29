@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+            "outputFile": "F:\\programming\\Visual Studio\\AP2MS5\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\amit\\.gradle\\caches\\transforms-2\\files-2.1\\e46f3e16fd8948e8e4c48c913cb404d3\\appcompat-1.1.0\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\carme\\.gradle\\caches\\transforms-2\\files-2.1\\e46f3e16fd8948e8e4c48c913cb404d3\\appcompat-1.1.0\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

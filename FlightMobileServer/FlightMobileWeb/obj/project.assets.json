@@ -6071,23 +6071,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\amit\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\carme\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
+      "projectUniqueName": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
       "projectName": "FlightMobileWeb",
-      "projectPath": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
-      "packagesPath": "C:\\Users\\amit\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\amit\\Documents\\GitHub\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\obj\\",
+      "projectPath": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\FlightMobileWeb.csproj",
+      "packagesPath": "C:\\Users\\carme\\.nuget\\packages\\",
+      "outputPath": "F:\\programming\\Visual Studio\\AP2MS5\\FlightMobileServer\\FlightMobileWeb\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\amit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\carme\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
