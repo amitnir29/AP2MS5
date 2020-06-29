@@ -1,6 +1,8 @@
 package com.example.flightmobileapp
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Float.parseFloat
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +31,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SimulatorFragment : Fragment() {
     private lateinit var binding: FragmentSimulatorBinding
     private lateinit var simulatorJob: Job
+
+
+    private lateinit var serverCommunication : ServerCommunication
 
     private var uri: String? = null
 
@@ -44,10 +50,37 @@ class SimulatorFragment : Fragment() {
         super.onStart()
 
         uri = arguments?.getString("url")
+        serverCommunication = ServerCommunication(uri!!);
+        binding.joystickView2.serverCommunication = serverCommunication
+
+        rudderSeekBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+        rudderSeekBar.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+
+        throttleSeekBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+        throttleSeekBar.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
         rudderSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                rudderValue.text = (progress.toFloat() / 100.0).toString();
+                var cur : Float = (progress.toFloat() / 100f)
+                rudderValue.text = cur.toString();
+                serverCommunication.rudder = cur;
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+
+        throttleSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                var cur : Float = (progress.toFloat() / 100f)
+                throttleValue.text = cur.toString();
+                serverCommunication.throttle = cur;
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -77,6 +110,9 @@ class SimulatorFragment : Fragment() {
 
     //TODO fix backwards disconnection
 
+    private suspend fun sendValues() {
+
+    }
 
     private suspend fun imageAsking(delayTime: Long) {
         //binding.textView.text = uri

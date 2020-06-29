@@ -41,12 +41,15 @@ public abstract class FragmentSimulatorBinding extends ViewDataBinding {
   public final TextView textView2;
 
   @NonNull
-  public final VerticalSeekBar verticalSeekBar2;
+  public final VerticalSeekBar throttleSeekBar;
+
+  @NonNull
+  public final TextView throttleValue;
 
   protected FragmentSimulatorBinding(Object _bindingComponent, View _root, int _localFieldCount,
       JoystickView joystickView2, ConstraintLayout linearLayout, SeekBar rudderSeekBar,
       TextView rudderValue, ImageView simulatorView, TextView textView, TextView textView2,
-      VerticalSeekBar verticalSeekBar2) {
+      VerticalSeekBar throttleSeekBar, TextView throttleValue) {
     super(_bindingComponent, _root, _localFieldCount);
     this.joystickView2 = joystickView2;
     this.linearLayout = linearLayout;
@@ -55,7 +58,8 @@ public abstract class FragmentSimulatorBinding extends ViewDataBinding {
     this.simulatorView = simulatorView;
     this.textView = textView;
     this.textView2 = textView2;
-    this.verticalSeekBar2 = verticalSeekBar2;
+    this.throttleSeekBar = throttleSeekBar;
+    this.throttleValue = throttleValue;
   }
 
   @NonNull

@@ -34,7 +34,16 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
     private var inmove : Boolean = false;
 
+    private var relX : Float = 0f;
+    private var relY : Float = 0f;
+
+
     private  var ratioDraw : Float = 30f;
+
+    public var serverCommunication : ServerCommunication? = null
+    set(value) {
+        field = value;
+    }
 
 
     constructor(context: Context) : super(context) {
@@ -85,7 +94,10 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
             var color : Paint = Paint();
 
             // Clear the canvas.
-            myCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            //myCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
+            myCanvas.drawColor(Color.WHITE, PorterDuff.Mode.SCREEN);
+
+            var move : Float = -110.0F;
 
 
             var hypo : Float = Math.sqrt((((newX - centerX) * (newX - centerX))
@@ -95,25 +107,25 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
             // Draw the base circle without shading.
             color.setARGB(255, 50, 50, 50);
-            myCanvas.drawCircle(centerX, centerY, baseRadius, color);
+            myCanvas.drawCircle(centerX, centerY + move, baseRadius, color);
 
             // Shading the base.
             for (i in 1 .. (baseRadius / ratioDraw).toInt()) {
                 color.setARGB((150 / i).toInt(), 255, 0, 0);
                 myCanvas.drawCircle((newX - cos * hypo * (ratioDraw /baseRadius) * i).toFloat(),
-                    (newY - sin * hypo * (ratioDraw / baseRadius) * i).toFloat(),
+                    (newY - sin * hypo * (ratioDraw / baseRadius) * i).toFloat() + move,
                     (i * (topRadius * ratioDraw / baseRadius)).toFloat(), color);
             }
 
             // Draw the top circle without shading.
             color.setARGB(255, 0, 0, 255);
-            myCanvas.drawCircle(newX, newY, topRadius, color);
+            myCanvas.drawCircle(newX, newY + move, topRadius, color);
 
             // Shading the top.
             for (i in 1 .. (topRadius / ratioDraw).toInt()) {
                 color.setARGB(255, (i * (255 * ratioDraw / topRadius)).toInt(),
                     (i * (255 * ratioDraw / topRadius)).toInt(), 255);
-                myCanvas.drawCircle(newX, newY,
+                myCanvas.drawCircle(newX, newY + move,
                     ((topRadius - i.toFloat() * ratioDraw / 2)/1.3).toFloat(), color);
             }
 
@@ -138,6 +150,8 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
                 // Inside the borders.
                 if (radius <= baseRadius) {
                     inmove = true;
+                    serverCommunication?.aileron ?: computeRelX(event.x);
+                    serverCommunication?.elevator ?: computeRelX(event.y);
                     drawJoystick(event.x, event.y);
                 }
                 // Need to calculate the relative place.
@@ -153,6 +167,8 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
             // Stop moving the joystick and returning it to center.
             else {
                 //ObjectAnimator.ofFloat(this, )
+                serverCommunication?.aileron ?: computeRelX(centerX);
+                serverCommunication?.elevator ?: computeRelX(centerY);
                 drawJoystick(centerX, centerY);
                 inmove = false;
             }
@@ -160,4 +176,11 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
         return true;
     }
 
+    private fun computeRelX(x : Float): Float {
+        return ((x - centerX) / (2.0 * baseRadius)).toFloat();
+    }
+
+    private fun computeRelY(y : Float): Float {
+        return ((y - centerY) / (2.0 * baseRadius)).toFloat();
+    }
 }

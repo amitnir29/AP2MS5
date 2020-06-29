@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingComponent;
 import androidx.databinding.ViewDataBinding;
 import com.example.flightmobileapp.databinding.FragmentLoginBindingImpl;
 import com.example.flightmobileapp.databinding.FragmentSimulatorBindingImpl;
+import com.example.flightmobileapp.databinding.FragmentSimulatorBindingLandImpl;
 import java.lang.IllegalArgumentException;
 import java.lang.Integer;
 import java.lang.Object;
@@ -46,6 +47,9 @@ public class DataBinderMapperImpl extends DataBinderMapper {
           throw new IllegalArgumentException("The tag for fragment_login is invalid. Received: " + tag);
         }
         case  LAYOUT_FRAGMENTSIMULATOR: {
+          if ("layout-land/fragment_simulator_0".equals(tag)) {
+            return new FragmentSimulatorBindingLandImpl(component, view);
+          }
           if ("layout/fragment_simulator_0".equals(tag)) {
             return new FragmentSimulatorBindingImpl(component, view);
           }
@@ -104,10 +108,11 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerLayoutIdLookup {
-    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(2);
+    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(3);
 
     static {
       sKeys.put("layout/fragment_login_0", com.example.flightmobileapp.R.layout.fragment_login);
+      sKeys.put("layout-land/fragment_simulator_0", com.example.flightmobileapp.R.layout.fragment_simulator);
       sKeys.put("layout/fragment_simulator_0", com.example.flightmobileapp.R.layout.fragment_simulator);
     }
   }

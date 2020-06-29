@@ -72,6 +72,10 @@
         "source": "C:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     },
     {
+        "merged": "C:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\build\\intermediates\\res\\merged\\debug\\layout-land_fragment_simulator.xml.flat",
+        "source": "C:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\src\\main\\res\\layout-land\\fragment_simulator.xml"
+    },
+    {
         "merged": "C:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },

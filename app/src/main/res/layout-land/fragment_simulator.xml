@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SimulatorFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/simulatorView"
+            android:layout_width="353dp"
+            android:layout_height="398dp"
+            android:contentDescription="@string/simulator_view_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <com.example.flightmobileapp.JoystickView
+            android:id="@+id/joystickView2"
+            android:layout_width="374dp"
+            android:layout_height="356dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/simulatorView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.49" />
+
+        <SeekBar
+            android:id="@+id/rudderSeekBar"
+            android:layout_width="323dp"
+            android:layout_height="15dp"
+            android:layout_marginBottom="28dp"
+            android:max="100"
+            android:min="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.99"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.example.flightmobileapp.VerticalSeekBar
+            android:id="@+id/throttleSeekBar"
+            android:layout_width="11dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="376dp"
+            android:layout_marginBottom="52dp"
+            android:max="200"
+            android:min="0"
+            android:progress="100"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="181dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/rudder"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.772"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rudderSeekBar" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="98dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="268dp"
+            android:layout_marginBottom="148dp"
+            android:rotation="90"
+            android:text="@string/throttle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/rudderValue"
+            android:layout_width="32dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="8dp"
+            android:text="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.821"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rudderSeekBar" />
+
+        <TextView
+            android:id="@+id/throttleValue"
+            android:layout_width="34dp"
+            android:layout_height="116dp"
+            android:layout_marginEnd="348dp"
+            android:layout_marginBottom="68dp"
+            android:rotation="90"
+            android:text="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_bias="0.175" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
