@@ -9,10 +9,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import com.example.flightmobileapp.JoystickView;
 import com.example.flightmobileapp.R;
+import com.example.flightmobileapp.VerticalSeekBar;
 import java.lang.Deprecated;
 import java.lang.Object;
 
@@ -21,10 +23,13 @@ public abstract class FragmentSimulatorBinding extends ViewDataBinding {
   public final JoystickView joystickView2;
 
   @NonNull
-  public final SeekBar seekBar;
+  public final ConstraintLayout linearLayout;
 
   @NonNull
-  public final SeekBar seekBar2;
+  public final SeekBar rudderSeekBar;
+
+  @NonNull
+  public final TextView rudderValue;
 
   @NonNull
   public final ImageView simulatorView;
@@ -32,15 +37,25 @@ public abstract class FragmentSimulatorBinding extends ViewDataBinding {
   @NonNull
   public final TextView textView;
 
+  @NonNull
+  public final TextView textView2;
+
+  @NonNull
+  public final VerticalSeekBar verticalSeekBar2;
+
   protected FragmentSimulatorBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      JoystickView joystickView2, SeekBar seekBar, SeekBar seekBar2, ImageView simulatorView,
-      TextView textView) {
+      JoystickView joystickView2, ConstraintLayout linearLayout, SeekBar rudderSeekBar,
+      TextView rudderValue, ImageView simulatorView, TextView textView, TextView textView2,
+      VerticalSeekBar verticalSeekBar2) {
     super(_bindingComponent, _root, _localFieldCount);
     this.joystickView2 = joystickView2;
-    this.seekBar = seekBar;
-    this.seekBar2 = seekBar2;
+    this.linearLayout = linearLayout;
+    this.rudderSeekBar = rudderSeekBar;
+    this.rudderValue = rudderValue;
     this.simulatorView = simulatorView;
     this.textView = textView;
+    this.textView2 = textView2;
+    this.verticalSeekBar2 = verticalSeekBar2;
   }
 
   @NonNull

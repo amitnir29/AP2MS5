@@ -1,7 +1,7 @@
-#Mon Jun 29 15:03:23 IDT 2020
-base.0=F\:\\programming\\Visual Studio\\AP2MS5\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+#Mon Jun 29 17:49:45 IDT 2020
+base.0=C\:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=F\:\\programming\\Visual Studio\\AP2MS5\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex
+base.1=C\:\\Users\\Lenovo\\Desktop\\Studies\\Advanced Programming 2\\MS5\\GitClone\\AP2MS5\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\classes.dex

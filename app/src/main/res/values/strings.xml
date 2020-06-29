@@ -5,4 +5,6 @@
     <string name="simulator_view_description">Simulator View</string>
     <string name="type_url">Type URL...</string>
     <string name="connect">Connect</string>
+    <string name="rudder">Rudder</string>
+    <string name="throttle"><![CDATA[<- Throttle ->]]></string>
 </resources>

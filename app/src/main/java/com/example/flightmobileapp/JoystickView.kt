@@ -15,6 +15,7 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.widget.SeekBar
 
 /**
  * TODO: document your custom view class.
@@ -26,10 +27,12 @@ import android.view.View
 
 class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
-    private var centerX : Float = 0f
-    private var centerY : Float = 0f
-    private var baseRadius : Float = 0f
-    private var topRadius : Float = 0f
+    private var centerX : Float = 0f;
+    private var centerY : Float = 0f;
+    private var baseRadius : Float = 0f;
+    private var topRadius : Float = 0f;
+
+    private var inmove : Boolean = false;
 
     private  var ratioDraw : Float = 30f;
 
@@ -121,20 +124,24 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         if (v != null && v.equals(this)) {
+
             // Moving the joystick.
             if(event != null && event.action != MotionEvent.ACTION_UP) {
+
                 var checkX : Float = event.x - centerX;
                 var checkY : Float = event.y - centerY;
 
                 var radius : Float = Math.sqrt((checkX * checkX).toDouble() +
                     (checkY * checkY).toDouble()).toFloat();
 
+
                 // Inside the borders.
                 if (radius <= baseRadius) {
+                    inmove = true;
                     drawJoystick(event.x, event.y);
                 }
                 // Need to calculate the relative place.
-                else {
+                else if (inmove) {
                     // Relative position.
                     var ratio : Float = baseRadius / radius;
                     var consX : Float = centerX + (event.x - centerX) * ratio;
@@ -147,6 +154,7 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
             else {
                 //ObjectAnimator.ofFloat(this, )
                 drawJoystick(centerX, centerY);
+                inmove = false;
             }
         }
         return true;

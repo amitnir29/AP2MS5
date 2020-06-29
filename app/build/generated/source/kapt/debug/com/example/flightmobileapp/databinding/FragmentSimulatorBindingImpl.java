@@ -15,32 +15,34 @@ public class FragmentSimulatorBindingImpl extends FragmentSimulatorBinding  {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.simulatorView, 1);
-        sViewsWithIds.put(R.id.textView, 2);
-        sViewsWithIds.put(R.id.joystickView2, 3);
-        sViewsWithIds.put(R.id.seekBar, 4);
-        sViewsWithIds.put(R.id.seekBar2, 5);
+        sViewsWithIds.put(R.id.joystickView2, 2);
+        sViewsWithIds.put(R.id.rudderSeekBar, 3);
+        sViewsWithIds.put(R.id.verticalSeekBar2, 4);
+        sViewsWithIds.put(R.id.textView, 5);
+        sViewsWithIds.put(R.id.textView2, 6);
+        sViewsWithIds.put(R.id.rudderValue, 7);
     }
     // views
-    @NonNull
-    private final android.widget.LinearLayout mboundView0;
     // variables
     // values
     // listeners
     // Inverse Binding Event Handlers
 
     public FragmentSimulatorBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 6, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 8, sIncludes, sViewsWithIds));
     }
     private FragmentSimulatorBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
-            , (com.example.flightmobileapp.JoystickView) bindings[3]
-            , (android.widget.SeekBar) bindings[4]
-            , (android.widget.SeekBar) bindings[5]
+            , (com.example.flightmobileapp.JoystickView) bindings[2]
+            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[0]
+            , (android.widget.SeekBar) bindings[3]
+            , (android.widget.TextView) bindings[7]
             , (android.widget.ImageView) bindings[1]
-            , (android.widget.TextView) bindings[2]
+            , (android.widget.TextView) bindings[5]
+            , (android.widget.TextView) bindings[6]
+            , (com.example.flightmobileapp.VerticalSeekBar) bindings[4]
             );
-        this.mboundView0 = (android.widget.LinearLayout) bindings[0];
-        this.mboundView0.setTag(null);
+        this.linearLayout.setTag(null);
         setRootTag(root);
         // listeners
         invalidateAll();

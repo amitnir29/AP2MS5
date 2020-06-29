@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.flightmobileapp.databinding.FragmentSimulatorBinding
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_simulator.*
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -42,6 +45,21 @@ class SimulatorFragment : Fragment() {
 
         uri = arguments?.getString("url")
 
+        rudderSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                rudderValue.text = (progress.toFloat() / 100.0).toString();
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+
         simulatorJob = Job()
 
         val scope = CoroutineScope(Dispatchers.Main + simulatorJob)
@@ -61,7 +79,7 @@ class SimulatorFragment : Fragment() {
 
 
     private suspend fun imageAsking(delayTime: Long) {
-        binding.textView.text = uri
+        //binding.textView.text = uri
 
         withContext(Dispatchers.Main) {
             while (true) {
