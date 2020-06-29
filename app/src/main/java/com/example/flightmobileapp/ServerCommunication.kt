@@ -1,19 +1,42 @@
 package com.example.flightmobileapp
 
+import android.content.Context
+import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.Toast
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 import kotlin.math.abs
 
 class ServerCommunication {
-
     private var uri : String = ""
-    constructor(url : String) {
+    private lateinit var context:Context;
+    private constructor(url : String, context: Context) {
         uri = url
+        this.context = context
+    }
+
+    companion object {
+        private var INSTANCE: ServerCommunication? = null
+
+        public fun create(url: String, context: Context) {
+            INSTANCE = ServerCommunication(url, context)
+        }
+
+        public fun getInstance() :ServerCommunication{
+
+            return INSTANCE!!
+        }
     }
 
     public var aileron : Float = 0f
@@ -74,11 +97,39 @@ class ServerCommunication {
     private fun jsonandcomm() {
         //TODO
         val url = "$uri/command/"
-        /*val con: HttpURLConnection = url.openConnection() as HttpURLConnection
-        con.requestMethod = "POST"
-        con.setRequestProperty("Content-Type", "application/json; utf-8")*/
+        val command: Vals = Vals(aileron,rudder,elevator,throttle);
+
+        val gson = GsonBuilder()
+                .setLenient()
+                .create()
+
+        val retrofit = Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+
+        val api = retrofit.create(Api::class.java)
+
+        api.postVals(command).enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                val message = "Failed to get image from the server."
+                val duration = Toast.LENGTH_SHORT
+
+                val toast = Toast.makeText(context, message, duration)
+
+                toast.show()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+            }
+        })
 
     }
+
+
+
+
     /*Throws(IOException::class, JSONException::class)
     private suspend fun httpPost(myUrl: String): String {
 

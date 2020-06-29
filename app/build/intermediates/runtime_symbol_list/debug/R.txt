@@ -1231,7 +1231,7 @@ int id invisible 0x7f080086
 int id italic 0x7f080087
 int id item_touch_helper_previous_elevation 0x7f080088
 int id joystickView 0x7f080089
-int id joystickView2 0x7f08008a
+int id joystick_view 0x7f08008a
 int id labeled 0x7f08008b
 int id largeLabel 0x7f08008c
 int id left 0x7f08008d

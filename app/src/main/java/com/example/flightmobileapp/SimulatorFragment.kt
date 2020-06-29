@@ -4,13 +4,11 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.flightmobileapp.databinding.FragmentSimulatorBinding
@@ -23,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Float.parseFloat
 
 /**
  * A simple [Fragment] subclass.
@@ -33,14 +30,20 @@ class SimulatorFragment : Fragment() {
     private lateinit var simulatorJob: Job
 
 
-    private lateinit var serverCommunication : ServerCommunication
+    private var serverCommunication: ServerCommunication? = null;
 
     private var uri: String? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState);
+        ServerCommunication.create(uri!!, context!!);
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         binding = DataBindingUtil.inflate(inflater,
-        R.layout.fragment_simulator, container, false)
+                R.layout.fragment_simulator, container, false)
 
         return binding.root
     }
@@ -50,8 +53,8 @@ class SimulatorFragment : Fragment() {
         super.onStart()
 
         uri = arguments?.getString("url")
-        serverCommunication = ServerCommunication(uri!!);
-        binding.joystickView2.serverCommunication = serverCommunication
+
+        serverCommunication = ServerCommunication.getInstance();
 
         rudderSeekBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         rudderSeekBar.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
@@ -61,9 +64,9 @@ class SimulatorFragment : Fragment() {
 
         rudderSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                var cur : Float = (progress.toFloat() / 100f)
+                var cur: Float = (progress.toFloat() / 100f)
                 rudderValue.text = cur.toString();
-                serverCommunication.rudder = cur;
+                serverCommunication?.rudder = cur;
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -78,9 +81,9 @@ class SimulatorFragment : Fragment() {
 
         throttleSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                var cur : Float = (progress.toFloat() / 100f)
+                var cur: Float = (progress.toFloat() / 100f)
                 throttleValue.text = cur.toString();
-                serverCommunication.throttle = cur;
+                serverCommunication?.throttle = cur;
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

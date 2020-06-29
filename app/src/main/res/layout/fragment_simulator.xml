@@ -21,7 +21,7 @@
             tools:src="@tools:sample/avatars" />
 
         <com.example.flightmobileapp.JoystickView
-            android:id="@+id/joystickView2"
+            android:id="@+id/joystick_view"
             android:layout_width="400dp"
             android:layout_height="290dp"
             android:layout_marginTop="4dp"

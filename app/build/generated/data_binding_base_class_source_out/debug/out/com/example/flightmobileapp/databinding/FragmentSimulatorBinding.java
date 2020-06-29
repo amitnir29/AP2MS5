@@ -20,7 +20,7 @@ import java.lang.Object;
 
 public abstract class FragmentSimulatorBinding extends ViewDataBinding {
   @NonNull
-  public final JoystickView joystickView2;
+  public final JoystickView joystickView;
 
   @NonNull
   public final ConstraintLayout linearLayout;
@@ -47,11 +47,11 @@ public abstract class FragmentSimulatorBinding extends ViewDataBinding {
   public final TextView throttleValue;
 
   protected FragmentSimulatorBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      JoystickView joystickView2, ConstraintLayout linearLayout, SeekBar rudderSeekBar,
+      JoystickView joystickView, ConstraintLayout linearLayout, SeekBar rudderSeekBar,
       TextView rudderValue, ImageView simulatorView, TextView textView, TextView textView2,
       VerticalSeekBar throttleSeekBar, TextView throttleValue) {
     super(_bindingComponent, _root, _localFieldCount);
-    this.joystickView2 = joystickView2;
+    this.joystickView = joystickView;
     this.linearLayout = linearLayout;
     this.rudderSeekBar = rudderSeekBar;
     this.rudderValue = rudderValue;

@@ -15,7 +15,7 @@ public class FragmentSimulatorBindingImpl extends FragmentSimulatorBinding  {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.simulatorView, 1);
-        sViewsWithIds.put(R.id.joystickView2, 2);
+        sViewsWithIds.put(R.id.joystick_view, 2);
         sViewsWithIds.put(R.id.rudderSeekBar, 3);
         sViewsWithIds.put(R.id.throttleSeekBar, 4);
         sViewsWithIds.put(R.id.textView, 5);

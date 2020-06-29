@@ -40,10 +40,7 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
     private  var ratioDraw : Float = 30f;
 
-    public var serverCommunication : ServerCommunication? = null
-    set(value) {
-        field = value;
-    }
+    private var serverCommunication : ServerCommunication = ServerCommunication.getInstance();
 
 
     constructor(context: Context) : super(context) {
@@ -162,6 +159,8 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
                     var consY : Float = centerY + (event.y - centerY) * ratio;
 
                     drawJoystick(consX, consY);
+                    serverCommunication?.aileron ?: computeRelX(consX);
+                    serverCommunication?.elevator ?: computeRelX(consY);
                 }
             }
             // Stop moving the joystick and returning it to center.
