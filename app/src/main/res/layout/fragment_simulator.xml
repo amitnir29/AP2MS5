@@ -36,8 +36,9 @@
             android:layout_width="323dp"
             android:layout_height="15dp"
             android:layout_marginBottom="24dp"
-            android:max="100"
+            android:max="200"
             android:min="0"
+            android:progress="100"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -48,9 +49,9 @@
             android:layout_height="250dp"
             android:layout_marginStart="28dp"
             android:layout_marginBottom="16dp"
-            android:max="200"
+            android:max="100"
             android:min="0"
-            android:progress="100"
+            android:progress="0"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

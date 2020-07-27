@@ -4,23 +4,35 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import java.security.AccessControlContext
 
-@Database(entities = [myURL::class], version = 2, exportSchema = false)
+/**
+ * A database class for the urls database.
+ * Get an instance via [getInstance] static method.
+ */
+@Database(entities = [MyURL::class], version = 2, exportSchema = false)
 abstract class SavedURLsDatabase : RoomDatabase() {
+    // A reference to the dao object.
     abstract val urlDatabaseDao : URLDatabaseDao
 
-    val capacity: Int
+    // Property for capacity.
+    private val capacity: Int
         get() = 5
 
     companion object {
+        // A singleton object of the class.
         @Volatile
         private var INSTANCE: SavedURLsDatabase? = null
 
+
+        /**
+         * Get an instance (singleton) of the class.
+         * @param context the context.
+         */
         fun getInstance(context: Context): SavedURLsDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
+                // If haven't created an instance yet create one.
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                             context.applicationContext,
@@ -32,15 +44,22 @@ abstract class SavedURLsDatabase : RoomDatabase() {
 
                     INSTANCE = instance
                 }
+                // Return the singleton instance.
                 return instance
             }
         }
     }
 
+
+    /**
+     * Add a uri to the database.
+     * @param uri the uri to add.
+     */
     fun uriConnected(uri: String) {
+        // If haven'tsaved the uri yet:
         if (this.urlDatabaseDao.getByURL(uri) == null) {
             // Save the uri to the database for future usage.
-            val url = myURL(url = uri)
+            val url = MyURL(url = uri)
             urlDatabaseDao.insert(url)
 
             /* If database already contains more than the required elements,
@@ -50,6 +69,7 @@ abstract class SavedURLsDatabase : RoomDatabase() {
                 this.urlDatabaseDao.removeOldest()
         }
         else {
+            // If the uri exists, update its usage time.
             this.urlDatabaseDao.setLastUsed(uri)
         }
     }
@@ -60,7 +80,7 @@ abstract class SavedURLsDatabase : RoomDatabase() {
 
         var urls: MutableList<String> = mutableListOf()
 
-        for (urlObj: myURL in urlObjs)
+        for (urlObj: MyURL in urlObjs)
             urls.add(urlObj.url)
 
         return urls

@@ -2,6 +2,9 @@ package com.example.flightmobileapp
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * This class will serve as the JSON holder when we will send values to the server.
+ */
 data class Vals(val a: Float = 0f, val r: Float = 0f, val e: Float = 0f, val t: Float = 0f) {
 
     @SerializedName("aileron") val aileron : Float = a

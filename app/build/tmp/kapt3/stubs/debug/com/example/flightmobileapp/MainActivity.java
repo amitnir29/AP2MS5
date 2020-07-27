@@ -6,6 +6,10 @@ import java.lang.System;
 public final class MainActivity extends androidx.appcompat.app.AppCompatActivity {
     private java.util.HashMap _$_findViewCache;
     
+    /**
+     * Called when the main activity is created.
+     * @param savedInstanceState a bundle.
+     */
     @java.lang.Override()
     protected void onCreate(@org.jetbrains.annotations.Nullable()
     android.os.Bundle savedInstanceState) {

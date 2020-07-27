@@ -5,8 +5,7 @@ import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.Toast
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,59 +17,129 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 import kotlin.math.abs
 
+/**
+ * This class is responsible to send values to the server, if needed.
+ */
 class ServerCommunication {
     private var uri : String = ""
-    private lateinit var context:Context;
+    private var context:Context;
+    private var simulatorJob: Job
+    private var scope: CoroutineScope
+
     private constructor(url : String, context: Context) {
         uri = url
         this.context = context
+
+        simulatorJob = Job()
+        scope = CoroutineScope(Dispatchers.Main + simulatorJob)
     }
 
-    companion object {
-        private var INSTANCE: ServerCommunication? = null
 
-        public fun create(url: String, context: Context) {
+    /**
+     * To make the class a "singleton" class.
+     */
+    companion object {
+        @Volatile
+        var INSTANCE: ServerCommunication? = null
+
+        /**
+         * Create the object.
+         */
+        fun create(url: String, context: Context) {
             INSTANCE = ServerCommunication(url, context)
         }
 
-        public fun getInstance() :ServerCommunication{
+        /**
+         * Return the instance of the object.
+         */
+        fun getInstance() :ServerCommunication{
 
             return INSTANCE!!
         }
+
+        /**
+         * Do we exist.
+         */
+        fun isNull():Boolean{
+            return INSTANCE==null;
+        }
     }
 
-    public var aileron : Float = 0f
+    /**
+     * This is the aileron property.
+     */
+    var aileron : Float = 0f
     set(value) {
+        // Update the "delta" - the change from last time sent to server.
         lAileron += value - field
+        // Update the value.
         field = value
-        sendToServer()
+        // We updated our value, check if need to send to server.
+        scope.launch {
+            sendToServer()
+        }
     }
-    public var elevator : Float = 0f
+
+    /**
+     * This is the elevator property.
+     */
+    var elevator : Float = 0f
     set(value) {
+        // Update the "delta" - the change from last time sent to server.
         lElevator += value - field
+        // Update the value.
         field = value
-        sendToServer()
+        // We updated our value, check if need to send to server.
+        scope.launch {
+            sendToServer()
+        }
     }
-    public var rudder : Float = 0f
+
+    /**
+     * This is the rudder property.
+     */
+    var rudder : Float = 0f
     set(value) {
+        // Update the "delta" - the change from last time sent to server.
         lRudder += value - field
+        // Update the value.
         field = value
-        sendToServer()
+        // We updated our value, check if need to send to server.
+        scope.launch {
+            sendToServer()
+        }
     }
-    public var throttle : Float = 0f
+
+    /**
+     * This is the throttle property.
+     */
+    var throttle : Float = 0f
     set(value) {
+        // Update the "delta" - the change from last time sent to server.
         lThrottle += value - field
+        // Update the value.
         field = value
-        sendToServer()
+        // We updated our value, check if need to send to server.
+        scope.launch {
+            sendToServer()
+        }
     }
+
+
+    // These all are the "delta" to each property - the change from last time sent to server.
     private var lAileron : Float = 0f;
     private var lElevator : Float = 0f;
     private var lRudder : Float = 0f;
     private var lThrottle : Float = 0f;
 
 
-    private fun sendToServer() {
+    /**
+     * This function is checking if need to send the new values to the server (if there was more
+     *  than 1% change).
+     */
+    private suspend fun sendToServer() {
         var flag : Boolean = false
+        // Check each value if changed more than 1%.
         if (abs(lThrottle) >= 0.01) {
             flag = true
             lThrottle = 0F
@@ -89,84 +158,35 @@ class ServerCommunication {
         }
 
 
+        // If need to send to the server.
         if (flag) {
             jsonandcomm();
         }
     }
 
-    private fun jsonandcomm() {
-        //TODO
+    /**
+     * This function sends the new values to the server.
+     */
+    private suspend fun jsonandcomm() {
+        // The url.
         val url = "$uri/command/"
+        // Create a command object.
         val command: Vals = Vals(aileron,rudder,elevator,throttle);
-
-        val gson = GsonBuilder()
-                .setLenient()
-                .create()
-
-        val retrofit = Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-
-        val api = retrofit.create(Api::class.java)
-
-        api.postVals(command).enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                val message = "Failed to get image from the server."
-                val duration = Toast.LENGTH_SHORT
-
-                val toast = Toast.makeText(context, message, duration)
-
-                toast.show()
-            }
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-
-            }
-        })
-
-    }
+        // Send via API.
+        val post = Api.api.postVals(command)
 
 
-
-
-    /*Throws(IOException::class, JSONException::class)
-    private suspend fun httpPost(myUrl: String): String {
-
-        val result = withContext(Dispatchers.IO) {
-            val url = URL(myUrl)
-            // 1. create HttpURLConnection
-            val conn = url.openConnection() as HttpsURLConnection
-            conn.requestMethod = "POST"
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8")
-
-            // 2. build JSON object
-            val jsonObject = buidJsonObject()
-
-            // 3. add JSON content to POST request body
-            setPostRequestContent(conn, jsonObject)
-
-            // 4. make POST request to the given URL
-            conn.connect()
-
-            // 5. return response message
-            conn.responseMessage + ""
+        // Try to send and if failed than toast a message.
+        try {
+            post.await()
         }
-        return result
+        catch (e: Exception) {
+            val message = "Failed to get image from the server."
+            val duration = Toast.LENGTH_SHORT
+
+            val toast = Toast.makeText(context, message, duration)
+
+            toast.show()
+        }
     }
-
-    public fun send(view: View) {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
-        // clear text result
-        tvResult.setText("")
-
-        if (checkNetworkConnection())
-            lifecycleScope.launch {
-                val result = httpPost("https://hmkcode-api.appspot.com/rest/link/add")
-                tvResult.setText(result)
-            }
-        else
-            Toast.makeText(this, "Not Connected!", Toast.LENGTH_SHORT).show()
-
-    }*/
 }

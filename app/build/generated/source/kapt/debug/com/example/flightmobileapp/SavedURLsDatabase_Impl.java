@@ -87,7 +87,7 @@ public final class SavedURLsDatabase_Impl extends SavedURLsDatabase {
         final TableInfo _infoSavedUrls = new TableInfo("saved_urls", _columnsSavedUrls, _foreignKeysSavedUrls, _indicesSavedUrls);
         final TableInfo _existingSavedUrls = TableInfo.read(_db, "saved_urls");
         if (! _infoSavedUrls.equals(_existingSavedUrls)) {
-          return new RoomOpenHelper.ValidationResult(false, "saved_urls(com.example.flightmobileapp.myURL).\n"
+          return new RoomOpenHelper.ValidationResult(false, "saved_urls(com.example.flightmobileapp.MyURL).\n"
                   + " Expected:\n" + _infoSavedUrls + "\n"
                   + " Found:\n" + _existingSavedUrls);
         }

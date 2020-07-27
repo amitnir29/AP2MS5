@@ -18,7 +18,7 @@ import java.util.List;
 public final class URLDatabaseDao_Impl implements URLDatabaseDao {
   private final RoomDatabase __db;
 
-  private final EntityInsertionAdapter<myURL> __insertionAdapterOfmyURL;
+  private final EntityInsertionAdapter<MyURL> __insertionAdapterOfMyURL;
 
   private final SharedSQLiteStatement __preparedStmtOfRemoveOldest;
 
@@ -26,14 +26,14 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
 
   public URLDatabaseDao_Impl(RoomDatabase __db) {
     this.__db = __db;
-    this.__insertionAdapterOfmyURL = new EntityInsertionAdapter<myURL>(__db) {
+    this.__insertionAdapterOfMyURL = new EntityInsertionAdapter<MyURL>(__db) {
       @Override
       public String createQuery() {
         return "INSERT OR ABORT INTO `saved_urls` (`urlID`,`url`) VALUES (nullif(?, 0),?)";
       }
 
       @Override
-      public void bind(SupportSQLiteStatement stmt, myURL value) {
+      public void bind(SupportSQLiteStatement stmt, MyURL value) {
         stmt.bindLong(1, value.getUrlID());
         if (value.getUrl() == null) {
           stmt.bindNull(2);
@@ -59,11 +59,11 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
   }
 
   @Override
-  public void insert(final myURL url) {
+  public void insert(final MyURL url) {
     __db.assertNotSuspendingTransaction();
     __db.beginTransaction();
     try {
-      __insertionAdapterOfmyURL.insert(url);
+      __insertionAdapterOfMyURL.insert(url);
       __db.setTransactionSuccessful();
     } finally {
       __db.endTransaction();
@@ -105,7 +105,7 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
   }
 
   @Override
-  public myURL getByURL(final String url) {
+  public MyURL getByURL(final String url) {
     final String _sql = "SELECT * FROM saved_urls WHERE url = ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -119,13 +119,13 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
     try {
       final int _cursorIndexOfUrlID = CursorUtil.getColumnIndexOrThrow(_cursor, "urlID");
       final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
-      final myURL _result;
+      final MyURL _result;
       if(_cursor.moveToFirst()) {
         final long _tmpUrlID;
         _tmpUrlID = _cursor.getLong(_cursorIndexOfUrlID);
         final String _tmpUrl;
         _tmpUrl = _cursor.getString(_cursorIndexOfUrl);
-        _result = new myURL(_tmpUrlID,_tmpUrl);
+        _result = new MyURL(_tmpUrlID,_tmpUrl);
       } else {
         _result = null;
       }
@@ -137,7 +137,7 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
   }
 
   @Override
-  public List<myURL> getRelevants(final int amount) {
+  public List<MyURL> getRelevants(final int amount) {
     final String _sql = "SELECT * FROM saved_urls ORDER BY urlID DESC LIMIT ?";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
     int _argIndex = 1;
@@ -147,14 +147,14 @@ public final class URLDatabaseDao_Impl implements URLDatabaseDao {
     try {
       final int _cursorIndexOfUrlID = CursorUtil.getColumnIndexOrThrow(_cursor, "urlID");
       final int _cursorIndexOfUrl = CursorUtil.getColumnIndexOrThrow(_cursor, "url");
-      final List<myURL> _result = new ArrayList<myURL>(_cursor.getCount());
+      final List<MyURL> _result = new ArrayList<MyURL>(_cursor.getCount());
       while(_cursor.moveToNext()) {
-        final myURL _item;
+        final MyURL _item;
         final long _tmpUrlID;
         _tmpUrlID = _cursor.getLong(_cursorIndexOfUrlID);
         final String _tmpUrl;
         _tmpUrl = _cursor.getString(_cursorIndexOfUrl);
-        _item = new myURL(_tmpUrlID,_tmpUrl);
+        _item = new MyURL(_tmpUrlID,_tmpUrl);
         _result.add(_item);
       }
       return _result;

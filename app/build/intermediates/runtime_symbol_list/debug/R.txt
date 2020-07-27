@@ -2792,7 +2792,6 @@ int styleable RecyclerView_layoutManager 7
 int styleable RecyclerView_reverseLayout 8
 int styleable RecyclerView_spanCount 9
 int styleable RecyclerView_stackFromEnd 10
-int[] styleable RudderSeekbarView { }
 int[] styleable ScrimInsetsFrameLayout { 0x7f030115 }
 int styleable ScrimInsetsFrameLayout_insetForeground 0
 int[] styleable ScrollingViewBehavior_Layout { 0x7f03003e }

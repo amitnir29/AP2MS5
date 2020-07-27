@@ -11,9 +11,8 @@ import android.widget.SeekBar
 
 
 /**
- * TODO: document your custom view class.
+ * This class describes a vertical seek bar.
  */
-
 @SuppressLint("AppCompatCustomView")
 class VerticalSeekBar : SeekBar {
     constructor(context: Context?) : super(context) {}
@@ -48,12 +47,18 @@ class VerticalSeekBar : SeekBar {
         setMeasuredDimension(measuredHeight, measuredWidth)
     }
 
+    /**
+     * This is one of the only method we need to change, and it will rotate the seek-bar.
+     */
     override fun onDraw(c: Canvas) {
         c.rotate(-90f)
         c.translate(-height.toFloat(), 0f)
         super.onDraw(c)
     }
 
+    /**
+     * This method will be called when someone will touch the bar.
+     */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (!isEnabled) {
             return false

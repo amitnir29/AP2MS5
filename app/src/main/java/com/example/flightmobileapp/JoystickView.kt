@@ -9,6 +9,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.util.Log
 import android.util.Rational
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_UP
@@ -18,66 +19,67 @@ import android.view.View
 import android.widget.SeekBar
 
 /**
- * TODO: document your custom view class.
+ * This class describes a joystick, who can move in two axises and computes the relative
+ * values according to the location of the knob.
  */
-
-
-
-
 
 class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
 
-    private var centerX : Float = 0f;
-    private var centerY : Float = 0f;
-    private var baseRadius : Float = 0f;
-    private var topRadius : Float = 0f;
+    // The members that defines the joystick,
+    private var centerX: Float = 0f;
+    private var centerY: Float = 0f;
+    private var baseRadius: Float = 0f;
+    private var topRadius: Float = 0f;
 
-    private var inmove : Boolean = false;
+    // Is the joystick moving
+    private var inmove: Boolean = false;
 
-    private var relX : Float = 0f;
-    private var relY : Float = 0f;
+    private var ratioDraw: Float = 30f;
 
-
-    private  var ratioDraw : Float = 30f;
-
-    private var serverCommunication : ServerCommunication = ServerCommunication.getInstance();
+    // The server communication object.
+    private var serverCommunication: ServerCommunication = ServerCommunication.getInstance();
 
 
     constructor(context: Context) : super(context) {
-        //init(null, 0)
         holder.addCallback(this);
         setOnTouchListener(this);
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        //init(attrs, 0)
         holder.addCallback(this);
         setOnTouchListener(this);
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
+            context,
+            attrs,
+            defStyle
     ) {
-        //init(attrs, defStyle)
         holder.addCallback(this);
         setOnTouchListener(this);
     }
 
-    public override fun surfaceCreated(holder : SurfaceHolder?) {
+    /**
+     * When the surface is created, this method will be called and will set up the dimensions
+     *  and draw the initial position of the joystick.
+     */
+    override fun surfaceCreated(holder: SurfaceHolder?) {
         dimensionsSetUp();
         drawJoystick(centerX, centerY);
     }
 
-    public override fun surfaceChanged(holder : SurfaceHolder?, format : Int, width : Int, height : Int) {
+    override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int,
+                                       height: Int) {
 
     }
 
-    public override fun surfaceDestroyed(holder : SurfaceHolder?) {
+    override fun surfaceDestroyed(holder: SurfaceHolder?) {
 
     }
 
+    /**
+     * A function which setups the dimensions.
+     */
     private fun dimensionsSetUp() {
         centerX = (getWidth() / 2).toFloat();
         centerY = (getHeight() / 2).toFloat();
@@ -85,33 +87,38 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
         topRadius = (Math.min(getWidth(), getHeight()) / 5).toFloat();
     }
 
-    private fun drawJoystick(newX : Float, newY : Float) {
+    /**
+     * A function that draws the joystick in newX, newY.
+     */
+    private fun drawJoystick(newX: Float, newY: Float) {
         if (holder.surface.isValid) {
-            var myCanvas : Canvas = holder.lockCanvas();
-            var color : Paint = Paint();
+            serverCommunication.aileron = computeRelX(newX);
+            serverCommunication.elevator = computeRelY(newY);
+
+            val myCanvas: Canvas = holder.lockCanvas();
+            val color: Paint = Paint();
 
             // Clear the canvas.
-            //myCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
             myCanvas.drawColor(Color.WHITE, PorterDuff.Mode.SCREEN);
 
-            var move : Float = -110.0F;
+            val move: Float = -110.0F;
 
 
-            var hypo : Float = Math.sqrt((((newX - centerX) * (newX - centerX))
-                        + ((newY - centerY) * (newY - centerY))).toDouble()).toFloat();
-            var cos : Float = (newX - centerX) / hypo;
-            var sin : Float = (newY - centerY) / hypo;
+            val hypo: Float = Math.sqrt((((newX - centerX) * (newX - centerX))
+                    + ((newY - centerY) * (newY - centerY))).toDouble()).toFloat();
+            val cos: Float = (newX - centerX) / hypo;
+            val sin: Float = (newY - centerY) / hypo;
 
             // Draw the base circle without shading.
             color.setARGB(255, 50, 50, 50);
             myCanvas.drawCircle(centerX, centerY + move, baseRadius, color);
 
             // Shading the base.
-            for (i in 1 .. (baseRadius / ratioDraw).toInt()) {
+            for (i in 1..(baseRadius / ratioDraw).toInt()) {
                 color.setARGB((150 / i).toInt(), 255, 0, 0);
-                myCanvas.drawCircle((newX - cos * hypo * (ratioDraw /baseRadius) * i).toFloat(),
-                    (newY - sin * hypo * (ratioDraw / baseRadius) * i).toFloat() + move,
-                    (i * (topRadius * ratioDraw / baseRadius)).toFloat(), color);
+                myCanvas.drawCircle((newX - cos * hypo * (ratioDraw / baseRadius) * i).toFloat(),
+                        (newY - sin * hypo * (ratioDraw / baseRadius) * i).toFloat() + move,
+                        (i * (topRadius * ratioDraw / baseRadius)).toFloat(), color);
             }
 
             // Draw the top circle without shading.
@@ -119,11 +126,11 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
             myCanvas.drawCircle(newX, newY + move, topRadius, color);
 
             // Shading the top.
-            for (i in 1 .. (topRadius / ratioDraw).toInt()) {
+            for (i in 1..(topRadius / ratioDraw).toInt()) {
                 color.setARGB(255, (i * (255 * ratioDraw / topRadius)).toInt(),
-                    (i * (255 * ratioDraw / topRadius)).toInt(), 255);
+                        (i * (255 * ratioDraw / topRadius)).toInt(), 255);
                 myCanvas.drawCircle(newX, newY + move,
-                    ((topRadius - i.toFloat() * ratioDraw / 2)/1.3).toFloat(), color);
+                        ((topRadius - i.toFloat() * ratioDraw / 2) / 1.3).toFloat(), color);
             }
 
             // Post the changes.
@@ -131,43 +138,39 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
         }
     }
 
+    /**
+     * A function which being called each time someone touches the screen.
+     */
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         if (v != null && v.equals(this)) {
 
             // Moving the joystick.
-            if(event != null && event.action != MotionEvent.ACTION_UP) {
+            if (event != null && event.action != MotionEvent.ACTION_UP) {
 
-                var checkX : Float = event.x - centerX;
-                var checkY : Float = event.y - centerY;
+                val checkX: Float = event.x - centerX;
+                val checkY: Float = event.y - centerY;
 
-                var radius : Float = Math.sqrt((checkX * checkX).toDouble() +
-                    (checkY * checkY).toDouble()).toFloat();
-
+                val radius: Float = Math.sqrt((checkX * checkX).toDouble() +
+                        (checkY * checkY).toDouble()).toFloat();
 
                 // Inside the borders.
                 if (radius <= baseRadius) {
                     inmove = true;
-                    serverCommunication?.aileron ?: computeRelX(event.x);
-                    serverCommunication?.elevator ?: computeRelX(event.y);
                     drawJoystick(event.x, event.y);
                 }
                 // Need to calculate the relative place.
                 else if (inmove) {
                     // Relative position.
-                    var ratio : Float = baseRadius / radius;
-                    var consX : Float = centerX + (event.x - centerX) * ratio;
-                    var consY : Float = centerY + (event.y - centerY) * ratio;
+                    val ratio: Float = baseRadius / radius;
+                    val consX: Float = centerX + (event.x - centerX) * ratio;
+                    val consY: Float = centerY + (event.y - centerY) * ratio;
 
                     drawJoystick(consX, consY);
-                    serverCommunication?.aileron ?: computeRelX(consX);
-                    serverCommunication?.elevator ?: computeRelX(consY);
+
                 }
             }
             // Stop moving the joystick and returning it to center.
             else {
-                //ObjectAnimator.ofFloat(this, )
-                serverCommunication?.aileron ?: computeRelX(centerX);
-                serverCommunication?.elevator ?: computeRelX(centerY);
                 drawJoystick(centerX, centerY);
                 inmove = false;
             }
@@ -175,11 +178,18 @@ class JoystickView : SurfaceView, SurfaceHolder.Callback, View.OnTouchListener {
         return true;
     }
 
-    private fun computeRelX(x : Float): Float {
-        return ((x - centerX) / (2.0 * baseRadius)).toFloat();
+    /**
+     * Compute the relative position of X on the screen.
+     */
+    private fun computeRelX(x: Float): Float {
+        return ((x - centerX) / baseRadius).toFloat();
     }
 
-    private fun computeRelY(y : Float): Float {
-        return ((y - centerY) / (2.0 * baseRadius)).toFloat();
+    /**
+     * Compute the relative position of Y on the screen.
+     */
+    private fun computeRelY(y: Float): Float {
+        // Give negative sign because the axis is top to bottom.
+        return -((y - centerY) / baseRadius).toFloat();
     }
 }
